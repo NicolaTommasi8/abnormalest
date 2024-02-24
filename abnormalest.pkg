@@ -1,0 +1,17 @@
+v 1.0
+d abnormalest. Package to estimate abnormal measures.
+d Program by Francesca Rossignoli (francesca.rossignoli@univr.it)
+d and Nicola Tommasi (nicola.tommasi@univr.it)
+d
+d Distribution-Date: 20240105
+
+
+* I can also insert comments; these will not be displayed.
+* f lines name the files that comprise your package:
+
+f abnormalest.ado
+f abnormalest.sthlp
+
+* F serve per includere do-file in ado's PLUS
+
+
