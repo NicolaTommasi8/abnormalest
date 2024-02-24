@@ -1,7 +1,11 @@
-# eudbimport
-A Stata package to import EUROSTAT databases
+# abnormalest
+A Stata package to estimate abnormal measures
 
-Example:
 
-    eudbimport AVIA_GOEXCC, rawdata("data/raw_data/") outdata("data/out_data/") ///
-      select(keep if freq=="A") nodestring reshapevar(tra_meas)
+## Installation
+The package can be installed via GitHub.
+
+```
+net install abnormaest, from("https://raw.githubusercontent.com/NicolaTommasi8/abnormalest/master/") replace
+```
+
