@@ -6,6 +6,6 @@ A Stata package to estimate abnormal measures
 The package can be installed via GitHub.
 
 ```
-net install abnormaest, from("https://raw.githubusercontent.com/NicolaTommasi8/abnormalest/master/") replace
+net install abnormalest, from("https://raw.githubusercontent.com/NicolaTommasi8/abnormalest/master/") replace
 ```
 
