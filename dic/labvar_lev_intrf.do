@@ -1,6 +1,0 @@
-cap label var MOD "Moderate"
-cap label var LMOD "At least moderate"
-cap label var LTL "A little"
-cap label var LOT "A lot"
-cap label var XTRM "Extreme"
-cap label var NONE "None"
