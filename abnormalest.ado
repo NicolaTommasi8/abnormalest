@@ -1,6 +1,6 @@
-*! abnormalest v0.4 (Sep 2023)
+*! abnormalest v0.3 (Nov 2022)
 *! Francesca Rossignoli (francesca.rossignoli@univr.it) - Nicola Tommasi (nicola.tommasi@univr.it)
-* version 0.4    sep2023 - Switching from ebalance to ebalfit command
+
 * version 0.3    nov2022 - Francy & Nick revision
 * version 0.2.1  oct2022 - add sample selection for ebal model - fix() option
 * version 0.2    sep2022 - add ebal model and some options
@@ -12,9 +12,9 @@ version 15
 syntax varlist(numeric fv ts min=2) [if] [in] [fweight aweight pweight iweight],  ///
        condvars(varlist fv min=1) abnvar(name) [ estvar(name) MODel(string) minobs(integer 0) ///
        NOCONStant Quantile(real 0.5) ///
-       TARgets(string) ITERate(integer 300) PTOLerance(real 1e-6) BTOLerance(real 1e-6) DIFficult fix(varlist) debug]
+       TARgets(numlist >0 <=3 integer) MAXIter(integer 20) TOLerance(real .015) fix(varlist) debug]
 marksample touse
-tempvar valobs comb_condvars tmppred missflag valobs outcome stroutcome adjr2 probf treat _webal
+tempvar valobs comb_condvars tmppred missflag valobs outcome stroutcome adjr2 probf treat /*notreat*/ _webal
 
 
 /******************
@@ -31,11 +31,19 @@ if "`model'"=="qreg" & "`noconstant'"!="" {
   exit 498
 }
 
-capture which ebalfit
+capture which ebalance
 if _rc==111 {
-  di in yellow "ebalfit not installed.... installing..."
-  ssc inst ebalfit
+  di in yellow "ebalance not installed.... installing..."
+  ssc inst ebalance
 }
+capture which moremata
+if _rc==111 {
+  di in yellow "moremata not installed.... installing..."
+  ssc inst moremata
+}
+
+
+
 
 if "`model'"=="ebal" & "`fix'"!="" {
   foreach V of varlist `fix' {
@@ -52,18 +60,6 @@ if "`model'"=="ebal" & "`fix'"!="" {
     exit 498
   }
 }
-
-
-if "`targets'"!="" {
-  local full_targets "mean variance skeweness covariance"
-  local check : list full_targets & targets
-  if "`check'"=="" {
-    di as err "error in option {bf:targets()}"
-    exit 198
-  }
-}
-
-
 **end checks
 
 
@@ -72,8 +68,8 @@ if `quantile'==0.5 local quantile "quantile(0.5)"
 else  local quantile "quantile(`quantile')"
 
 if "`targets'"!="" local targets "targets(`targets')"
-local iterate "iterate(`iterate')"
-local ptolerance "ptolerance(`ptolerance')"
+local maxiter "maxiter(`maxiter')"
+local tolerance "tolerance(`tolerance')"
 
 
 gettoken depvar indeps : varlist
@@ -194,14 +190,9 @@ foreach l of local levels {
       qui count if `treat'==0
       qui replace `notreat'=r(N) if `touse' & `comb_condvars'==`l'
 
-      cap ebalfit `indeps', `targets' `ptolerance' `iterate' `difficult' by(`treat') generate(`_webal')
-      if _rc!=0 /*r(430);*/ {
-        qui replace `outcome'=4  if `touse' & `comb_condvars'==`l'
-        drop `treat'
-        local status = 3
-      }
 
-      else if `e(converged)' == 0 {
+      qui ebalance `treat' `indeps', `targets' `tolerance' `maxiter' generate(`_webal')
+      if `e(convg)' == 0 {
         qui replace `outcome'=3  if `touse' & `comb_condvars'==`l'
         drop `treat'
         local status = 3
@@ -236,7 +227,7 @@ if "`abnvar'"!="" qui gen double `abnvar'=`depvar'-`estvar' if `touse'
 preserve
 qui drop if `comb_condvars'==.
 collapse (count) `missflag' (mean) `outcome' `adjr2' `probf' `notreat' if `touse', by(`comb_condvars')
-label define `outcome' 0 "OK" 1 "Insuff. obs" 2 "Reg. fail" 3 "ebalance fail" 4 "balance not achieved"
+label define `outcome' 0 "OK" 1 "Insuff. obs" 2 "Reg. fail" 3 "ebalance fail"
 label values `outcome' `outcome'
 label var `outcome' "Regressions outcome"
 qui decode `outcome', gen(`stroutcome')
@@ -253,7 +244,7 @@ qui count if `outcome'==1
 local insuf=r(N)
 qui count if `outcome'==2
 local fail=r(N)
-qui count if inlist(`outcome',3,4)
+qui count if `outcome'==3
 local failebal=r(N)
 
 di _newline(2) "OK regressions: `ok'"
