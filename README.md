@@ -16,5 +16,5 @@ abnormalest depvar indepvars [if] [in] [weight], condvar(varlist) abnvar(varname
     iterate(integer) btolerance(#) ptolerance(#) difficult fix(varlist2) ]
 ```
 
-See the help file `help abnormalest' for details.
+See the help file `help abnormalest` for details.
 
