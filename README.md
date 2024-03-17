@@ -18,3 +18,10 @@ abnormalest depvar indepvars [if] [in] [weight], condvar(varlist) abnvar(varname
 
 See the help file `help abnormalest` for details.
 
+
+
+## Examples
+
+
+
+
