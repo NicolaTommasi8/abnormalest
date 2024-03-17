@@ -11,9 +11,10 @@ net install abnormalest, from("https://raw.githubusercontent.com/NicolaTommasi8/
 
 ## Syntax
 ```
-abnormalest depvar indepvars [if] [in] [weight], condvar(varlist)
-abnvar(varname) [ estvar(varname) model(string) minobs(#)
-noconstant quantile(#) targets(options) iterate(integer)
-btolerance(#) ptolerance(#) difficult fix(varlist2) ]
+abnormalest depvar indepvars [if] [in] [weight], condvar(varlist) abnvar(varname)
+  [ estvar(varname) model(string) minobs(#) noconstant quantile(#) targets(options)
+    iterate(integer) btolerance(#) ptolerance(#) difficult fix(varlist2) ]
 ```
+
+See the help file `help abnormalest' for details.
 
