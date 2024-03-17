@@ -1,6 +1,8 @@
 # abnormalest
 A Stata package to estimate abnormal measures
 
+by Francesca Rossingoli & Nicola Tommasi
+
 
 ## Installation
 The package can be installed via GitHub.
