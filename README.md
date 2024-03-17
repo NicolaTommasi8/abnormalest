@@ -264,7 +264,97 @@ observations in CHN, CYM and KOR.
 Fails in regression might be resolved by increasing maximum number of iterations (option `iterate()`)
 or increasing tolerance level (`ptolerance()`).
 
+```
+. clonevar country_aggr=country
 
+. replace country_aggr="KOR-CYM" if inlist(country,"CYM","KOR") & year==2019 & industry1d==9
+variable country_aggr was str3 now str7
+(10 real changes made)
+
+. replace country_aggr="KOR-CYM-CHN" if inlist(country,"CYM","KOR","CHN") & year==2021 & industry1d==9
+variable country_aggr was str7 now str11
+(13 real changes made)
+
+. 
+. abnormalest total_accruals_scaled intercept_scaled delta_REV_scaled PPE_scaled, ///
+>   condvars(industry1d year country_aggr) estvar(est3a_aggr) abnvar(abn3a_aggr) ///
+>   minobs(7) model(ebal)
+
+Conditional var #1: industry1d
+Levels of industry1d: 
+5 7 8 9
+
+Conditional var #2: year
+Levels of year: 
+2019 2020 2021
+
+Conditional var #3: country_aggr
+Levels of country_aggr: 
+CHN CYM KOR KOR-CYM KOR-CYM-CHN TWN
+
+I'm performing regressions... please wait!
+Looping until 42 regressions
+----+--- 1 ---+--- 2 ---+--- 3 ---+--- 4 ---+--- 5 
+.......................................x..
+x means Insuf. obs, n fail in regression
+
+Minimum number of obs: 7
+Theoric minimum number of obs: 4
+Conditional vars: industry1d year country_aggr
+
+OK regressions: 41
+No reg. by insuf obs.: 1
+Failed ebalance convergence: 0
+Failed regressions: 0
+
+----------------------------------------------------------------------------------
+Conditional vars    | Valid obs.          Reg. outcome          Adj Rsq   Prob > F
+--------------------+-------------------------------------------------------------
+5 2019 CHN          |     157 (4144)      OK                     0.0369     0.0000
+5 2019 CYM          |     105 (4196)      OK                     0.1705     0.0000
+5 2019 KOR          |     57 (4244)       OK                     0.0848     0.0000
+5 2019 TWN          |     107 (4194)      OK                     0.1675     0.0000
+5 2020 CHN          |     154 (4147)      OK                     0.1667     0.0000
+5 2020 CYM          |     100 (4201)      OK                     0.1113     0.0000
+5 2020 KOR          |     60 (4241)       OK                     0.0488     0.0000
+5 2020 TWN          |     106 (4195)      OK                     0.1116     0.0000
+5 2021 CHN          |     104 (4197)      OK                     0.1271     0.0000
+5 2021 CYM          |     65 (4236)       OK                     0.1033     0.0000
+5 2021 KOR          |     54 (4247)       OK                     0.0755     0.0000
+5 2021 TWN          |     101 (4200)      OK                     0.0877     0.0000
+7 2019 CHN          |     263 (4038)      OK                     0.0257     0.0000
+7 2019 CYM          |     139 (4162)      OK                     0.0642     0.0000
+7 2019 KOR          |     154 (4147)      OK                     0.0527     0.0000
+7 2019 TWN          |     103 (4198)      OK                     0.0947     0.0000
+7 2020 CHN          |     251 (4050)      OK                     0.0382     0.0000
+7 2020 CYM          |     136 (4165)      OK                     0.0676     0.0000
+7 2020 KOR          |     159 (4142)      OK                     0.0155     0.0000
+7 2020 TWN          |     104 (4197)      OK                     0.0272     0.0000
+7 2021 CHN          |     182 (4119)      OK                     0.0452     0.0000
+7 2021 CYM          |     87 (4214)       OK                     0.0791     0.0000
+7 2021 KOR          |     145 (4156)      OK                     0.0198     0.0000
+7 2021 TWN          |     89 (4212)       OK                     0.0499     0.0000
+8 2019 CHN          |     103 (4198)      OK                     0.0259     0.0000
+8 2019 CYM          |     47 (4254)       OK                     0.1553     0.0000
+8 2019 KOR          |     27 (4274)       OK                     0.0774     0.0000
+8 2019 TWN          |     21 (4280)       OK                     0.0872     0.0000
+8 2020 CHN          |     97 (4204)       OK                     0.0171     0.0000
+8 2020 CYM          |     48 (4253)       OK                     0.0674     0.0000
+8 2020 KOR          |     29 (4272)       OK                     0.2954     0.0000
+8 2020 TWN          |     21 (4280)       OK                     0.0434     0.0000
+8 2021 CHN          |     70 (4231)       OK                     0.0814     0.0000
+8 2021 CYM          |     26 (4275)       OK                     0.1221     0.0000
+8 2021 KOR          |     28 (4273)       OK                     0.1236     0.0000
+8 2021 TWN          |     20 (4281)       OK                     0.0503     0.0000
+9 2019 CHN          |     8 (4293)        OK                     0.1820     0.0000
+9 2019 KOR-CYM      |     9 (4292)        OK                     0.1444     0.0000
+9 2020 CHN          |     7 (4294)        OK                     0.0328     0.0000
+9 2020 CYM          |     2               Insuff. obs                 .          .
+9 2020 KOR          |     7 (4294)        OK                     0.1321     0.0000
+9 2021 KOR-CYM-CHN  |     8 (4293)        OK                     0.0953     0.0000
+----------------------------------------------------------------------------------
+In brackets observations in control group
+```
 
 
 
