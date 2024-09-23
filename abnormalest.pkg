@@ -1,9 +1,9 @@
-v 1.0
+v 0.3.1
 d abnormalest. Package to estimate abnormal measures.
 d Program by Francesca Rossignoli (francesca.rossignoli@univr.it)
 d and Nicola Tommasi (nicola.tommasi@univr.it)
 d
-d Distribution-Date: 20240229
+d Distribution-Date: 20240521
 
 
 * I can also insert comments; these will not be displayed.
