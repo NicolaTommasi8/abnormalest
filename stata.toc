@@ -1,8 +1,8 @@
-v 1.0
+v 0.3.1
 
 p abnormalest: Package to estimate abnormal measures
 
-d Version 1.0 (Jan 05, 2024)
+d Version 0.3.1 (May, 2024)
 d
 d Francesca Rossignoli, Department of Management (University of Verona)
 d Nicola Tommasi, C.I.D.E. (University of Verona)
