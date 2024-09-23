@@ -1,6 +1,7 @@
-*! abnormalest v0.3 (Nov 2022)
+*! abnormalest v0.3.1 (May 2024)
 *! Francesca Rossignoli (francesca.rossignoli@univr.it) - Nicola Tommasi (nicola.tommasi@univr.it)
 
+* version 0.3.1  may2024 - fix moremata update problem
 * version 0.3    nov2022 - Francy & Nick revision
 * version 0.2.1  oct2022 - add sample selection for ebal model - fix() option
 * version 0.2    sep2022 - add ebal model and some options
@@ -36,13 +37,19 @@ if _rc==111 {
   di in yellow "ebalance not installed.... installing..."
   ssc inst ebalance
 }
-capture which moremata
-if _rc==111 {
+capture ssc desc moremata
+if _rc==601 {
   di in yellow "moremata not installed.... installing..."
   ssc inst moremata
 }
 
-
+/****
+capture ssc inst moremata
+if _rc==602 {
+  di "moremata update available"
+  di "You can type <ssc inst moremata, replace> in Command bar to update moremata"
+}
+****/
 
 
 if "`model'"=="ebal" & "`fix'"!="" {

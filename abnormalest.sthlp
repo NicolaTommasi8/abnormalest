@@ -12,11 +12,9 @@ help for {cmd:abnormalest}{right:(Francesca Rossignoli and Nicola Tommasi)}
                                 {opt minobs(integer)}
                                 {opt nocons:tant}
                                 {opt q:antile(#)}
-                                {opt tar:gets(options)}
-                                {opt iter:ate(integer)}
-                                {opt btol:erance(#)}
-                                {opt ptol:erance(#)}
-                                {opt dif:ficult}
+                                {opt tar:gets(numlist)}
+                                {opt maxi:ter(integer)}
+                                {opt tol:erance(real)}
                                 {opt fix(varlist2)}
                                 ]
 
@@ -27,6 +25,8 @@ help for {cmd:abnormalest}{right:(Francesca Rossignoli and Nicola Tommasi)}
 {cmd:abnormalest} command allows to estimate the abnormal measure as the difference between the
 reported and predicted measure. Multiple estimation models are available to predict the measure:
 ols, quantile regression and regression preprocessed by entropy balance.
+
+The ebalance and moremata packages are required. The command abnormalest will install them if they are not already present.
 
 
 {title:Options for {cmd:abnormalest}}
@@ -39,19 +39,16 @@ ols, quantile regression and regression preprocessed by entropy balance.
 {p2coldent : {opt condvar(varlist)}} variables identifying the control sample observations whereon to predict the normal measure{p_end}
 {p2coldent : {opt abnvar(varname)}} variable generated as the difference between the reported measure depvar and the predicted measure estvar{p_end}
 {p2coldent : {opt estvar(varname)}}  estimated variable for depvar obtained from the estimation model used{p_end}
-{p2coldent : {cmdab:mod:el(ols}|{cmd:qreg}|{cmd:ebal)}} select estimation model. Available alternatives are ols, qreg and ebal. Default is {cmd:model(ols)}{p_end}
+{p2coldent : {cmdab:mod:el(ols}|{cmd:qreg}|{cmd:ebal)}} select estimation model. Available alternatives are ols, qreg and ebal. Default is {cmd: model(ols)}{p_end}
 {p2coldent : {opt minobs(integer)}} imposes the minimum number of observations to execute the conditional estimation.
    Default minimum is equal to the estimation model degrees + 1 (e(df_m)+1) in the ols and qreg models, and to the minimum number of observations in the treated sample for the ebal model{p_end}
 {p2coldent : {opt nocons:tant}} omits constant term in the conditional estimation model{p_end}
-{p2coldent : {opt q:antile(#)}} estimate # quantile; default is quantile(.5). {cmd:model(qreg)} is required{p_end}
-{p2coldent : {opt tar:gets(options)}} specify types of moments to be balanced; default is targets(mean). Possible options are: mean (the default), variance (implies mean),
-  skeweness (implies mean and variance) and covariance (implies mean). {cmd:model(ebal)} is required{p_end}
-{p2coldent : {opt iter:ate(integer)}} specifies the maximum number of iterations; default is iterate(300). {cmd:model(ebal)} is required{p_end}
-{p2coldent : {opt btol:erance(#)}} sets the balancing tolerance. Balance is achieved if the balancing loss is smaller than the balancing tolerance. The default is btolerance(1e-6). {cmd:model(ebal)} is required{p_end}
-{p2coldent : {opt ptol:erance(#)}} specifies the convergence tolerance for the coefficient vector. The default is ptolerance(1e-6). {cmd:model(ebal)} is required{p_end}
-{p2coldent : {opt dif:ficult}} use a different stepping algorithm in nonconcave regions. See the {cmd:difficult} option in {helpb maximize}. {cmd:model(ebal)} is required{p_end}
+{p2coldent : {opt q:antile(#)}} estimate # quantile; default is quantile(.5). {cmd: model(qreg)} is required{p_end}
+{p2coldent : {opt tar:gets(numlist)}} set balance constraints for covariates; default is targets(1). {cmd: model(ebal)} is required{p_end}
+{p2coldent : {opt maxi:ter(integer)}} set maximum number of iterations; default is maxiter(20). {cmd: model(ebal)} is required{p_end}
+{p2coldent : {opt tol:erance(integer)}} set tolerance level for convergence; default is tolerance(.015). {cmd: model(ebal)} is required{p_end}
 {p2coldent : {opt fix(varlist2)}} allows selecting the control units fixing one or more conditions to be met.
-   Variables in {opt varlist2} must be a subgroup of {opt condvar(varlist)} variables. {cmd:model(ebal)} is required{p_end}
+   Variables in {opt varlist2} must be a subgroup of {opt condvar(varlist)} variables. {cmd: model(ebal)} is required{p_end}
 {synoptline}
 {p2colreset}{...}
 {pstd}
